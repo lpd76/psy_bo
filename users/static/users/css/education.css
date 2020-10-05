@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+.cv {
+  font-size: 11px;
+}
+
+.cv_name {
+  font-weight: bold;
+}
+.cv_title_section{
+	
+}
+
+.cv_date{
+	
+}
+.cv_description{
+	font-size: 12px;
+	margin-top: 25px;
+}
+.cv_desc{
+	
+}
+.psy_phone{
+	font-size: 16px;
+	
+}

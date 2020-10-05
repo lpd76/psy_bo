@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+<!--- css -->
+	
+{% block title %}Associations Professionelles{% endblock %}
+
+{% block content %}
+	<div class="container">
+		
+		<h2>Associations Professionelles</h2>
+		<form method="post" class="form" enctype="multipart/form-data">
+			{% csrf_token %}
+			
+			{% bootstrap_form form %}
+			
+			<button type="submit" class="btn btn-primary" value="Save">Save</button>
+			<button type="submit" class="btn btn-primary" name="association-add" value="association-add">Save and add another</button>
+		</form>
+	</div>
+{% endblock %}

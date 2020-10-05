@@ -1,0 +1,8 @@
+*.pyc
+*~
+/.vscode
+__pycache__
+myvenv
+db.sqlite3
+.DS_Store
+Facture_Louis-Philippe David_01_Sep_2020.pdf

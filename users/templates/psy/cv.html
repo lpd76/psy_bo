@@ -1,0 +1,192 @@
+{% extends 'psy/psy_detail.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+<!--- css -->
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static 'users/css/education.css' %}">
+{% endblock %}
+	
+{% block title %}CV{% endblock %}
+
+{% block cv %}
+	<div class="container cv">
+		
+		<ul class="nav flex-column flex-lg-row">
+			<li class="nav-item">
+				<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Profile</a>
+			</li>
+			
+			<li class="nav-item">
+				<a class="nav-link" id="travail-tab" data-toggle="tab" href="#travail" role="tab" aria-controls="travail" aria-selected="true">Experience de Travail</a>
+			</li>
+			
+			<li class="nav-item">
+				<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Formation Continue</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="conference-tab" data-toggle="tab" href="#conference" role="tab" aria-controls="conference" aria-selected="false">Conférences</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Education</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="corporation-tab" data-toggle="tab" href="#corporation" role="tab" aria-controls="corporation" aria-selected="false">Associations Professionnelles</a>
+			</li>
+			
+		</ul>
+		
+		
+		<div class="tab-content" id="myTabContent">
+			<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+				<div class="cv_description">
+					{{psy_profile.bio|escape|linebreaks }}
+				</div>
+			</div>
+			<div class="tab-pane fade" id="travail" role="tabpanel" aria-labelledby="travail-tab">
+				<table class="table">
+					<tbody>
+						{% for element in cv_experience %}
+							{% if element.type == "ET" %}
+								<tr>
+									<td>
+										<div class="cv_date">{{ element.date_debut|date:"F Y" }} - {{ element.date_fin|date:"F Y" }}</div>
+									</td>
+									<td>
+										<div class="cv_name">{{ element.nom }}</div>
+										<div class="cv_desc">{{ element.description }}</div>
+									</td>
+								</tr>
+							{% endif %}
+						{% endfor %}
+					</tbody>
+				</table>
+				
+			</div>
+			
+			<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+			  
+				<table class="table">
+					<tbody>
+						{% for element in education_list %}
+							{% if element.type == "CR" %}
+								<tr>
+									<td>
+										<div class="cv_date">{{ element.date_obtention|date:"F Y" }}</div>
+									</td>
+									<td>
+									<div class="cv_name">{{ element.nom }}</div>
+										{% if element.institution %}
+											{% if element.institute_url %}
+												<div class="cv_institution"><a href="{{element.institute_url}}" >{{ element.institution }}</a></div>
+											{% else %}
+												<div class="cv_institution">{{ element.institution }}</div>
+											{% endif %}
+										{% endif %}
+										{% if element.formateur %}
+											{% if element.formateur_url %}
+												<div class="cv_formateur">Formateur : <a href="{{element.formateur_url}}" >{{ element.formateur }}</a></div>
+											{% else %}
+												<div class="cv_formateur">Formateur : {{ element.formateur }}</div>
+											{% endif %}
+										{% endif %}
+									</td>
+								</tr>
+							{% endif%}
+						{% endfor%}
+					</tbody>
+				</table>
+				
+			  </div>
+			  
+			  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+			  
+				  <table class="table ">
+						<tbody>
+							{% for element in education_list %}
+								{% if element.type == "FC" %}
+									<tr>
+										<td>
+											<div class="cv_date">{{ element.date_obtention|date:"F Y" }}</div>
+										</td>
+										<td>
+											<div class="cv_name">{{ element.nom }}</div>
+											{% if element.institution %}
+												{% if element.institute_url %}
+													<div class="cv_institution"><a href="{{element.institute_url}}" >{{ element.institution }}</a></div>
+												{% else %}
+													<div class="cv_institution">{{ element.institution }}</div>
+												{% endif %}
+											{% endif %}
+											{% if element.formateur %}
+												{% if element.formateur_url %}
+													<div class="cv_formateur">Formateur : <a href="{{element.formateur_url}}" >{{ element.formateur }}</a></div>
+												{% else %}
+													<div class="cv_formateur">Formateur : {{ element.formateur }}</div>
+												{% endif %}
+											{% endif %}
+										</td>
+									</tr>
+								{% endif%}
+							{% endfor%}
+						</tbody>
+					</table>
+					
+			  </div>
+			  
+			  <div class="tab-pane fade" id="conference" role="tabpanel" aria-labelledby="conference-tab">
+			  
+				<table class="table ">
+					<tbody>
+						{% for element in conference_list %}
+							
+							<tr>
+								<td>
+									<div class="cv_date">{{ element.date|date:"F Y" }}</div>
+								</td>
+								<td>
+									<div class="cv_name">{{ element.nom }}</div>
+									<div class="cv_institution">{{ element.organisme }}</div>
+									<div class="cv_formateur">{{ element.lieu }}</div>
+									<div class="cv_formateur">{{ element.description }}</div>
+								</td>
+							</tr>
+							
+						{% endfor%}
+					</tbody>
+				</table>
+					
+			</div>
+			
+			<div class="tab-pane fade" id="corporation" role="tabpanel" aria-labelledby="corporation-tab">
+				
+				<table class="table ">
+					<tbody>
+						{% for element in association_list %}
+							<tr>
+								<td>
+									<div class="cv_date">{{ element.date_debut|date:"F Y" }} - {{ element.date_fin|date:"F Y" }} </div>
+								</td>
+								
+								<td>
+									<div class="cv_name">{{ element.nom }}</div>
+									{% if element.is_active_member %}
+										<div class="cv_status_inactif">Actif</div>
+										{% if element.permis %}
+											<div class="cv_status_inactif">Permis : {{ element.permis }}</div>
+										{% endif %}
+									{% else %}
+										<div class="cv_status_actif">Inactif</div>
+									{% endif %}
+								</td>
+							</tr>
+						{% endfor%}
+					</tbody>
+				</table>
+				
+			</div>
+			
+		</div>
+		
+	</div>
+{% endblock %}

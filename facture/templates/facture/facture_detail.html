@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block extrahead %}
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+{% endblock %}
+<!--- css -->
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static 'facture/css/facture.css' %}">
+{% endblock %}
+	
+{% block title %}Facture{% endblock %}
+
+{% block content %}
+	<div class="container canvas">
+		<form method="post" class="form">
+			{% csrf_token %}
+			<div class="row">
+			
+				<div class="col-sm-12 col-lg-4" id="left-column">
+				
+					<div class="row" id="left-section-title">
+						<div class="col">
+							<div class="section-title">
+								<h4>Facture </h4>
+							</div>
+						</div>
+					</div>
+					<div class="row border-top border-danger css_major-block-content" id="bill-info-block">
+						<div class="row w-100">
+							<div class="col">
+								Créé:
+							</div>
+							<div class="col">
+								{{ facture_detail.date }}
+							</div>
+						</div>
+						
+						<div class="row w-100">
+							<div class="col">
+								Psychologue : 
+							</div>
+							<div class="col">
+								{{ facture_detail.psychologue }}
+							</div>
+						</div>
+						
+						<div class="row w-100">
+							<div class="col">
+								permis :
+							</div>
+							<div class="col ">
+								{{ facture_detail.psychologue.permis_num }}
+							</div>
+						</div>
+						
+						<div class="row w-100">
+							<div class="col">
+								Client :
+							</div>
+							<div class="col">
+								<a href="{% url 'clientdetails2' facture_detail.client.id %}">{{ facture_detail.client }}</a>
+							</div>
+						</div>
+						<div class="row w-100">
+							<div class="col">
+								adresse :
+							</div>
+							<div class="col">
+								<div>{{ facture_detail.client.door_number }} {{ facture_detail.client.street_name }}</div>
+								<div>{{ facture_detail.client.city }}</div>
+								<div>{{ facture_detail.client.province }}</div>
+							</div>
+						</div>
+						<div class="row w-100">
+							<div class="col">
+								{{solde.type}}
+							</div>
+							<div class="col">
+								{{solde.montant}} $
+							</div>
+						</div>
+						<div class="row w-100">
+							<div class="col">
+								Statut
+							</div>
+							<div class="col">
+								 {%if facture_detail.is_active %}
+								 	active
+								 {% else %}
+								 	fermée le {{facture_detail.close_date}}
+								 {% endif %}
+							</div>
+						</div>
+					</div>	
+					<div class="row">
+						<div class="col col-md-4 w-100">
+							<a href="{% url 'paiement-add' facture_detail.id %}" class="btn btn-primary btn-sm w-100" role="button" aria-pressed="true">Faire Paiement</a>
+						</div>
+						<div class="col col-md-4 w-100">
+							<a href="{% url 'prestationdeservice-add' facture_detail.id %}" class="btn btn-primary btn-sm w-100 {%if not facture_detail.is_active %} disabled {%endif%}" role="button" aria-pressed="true">Ajouter Honnoraires</a>
+						</div>
+						<div class="col col-md-4 w-100">
+							<a href="{% url 'facture-fermer' facture_detail.id %}" class="btn btn-primary btn-sm w-100 {%if not facture_detail.is_active %} disabled {%endif%}" role="button" aria-pressed="true">Fermer Facture</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col col-md-4 w-100">
+							<a href="{% url 'pdf_view2' facture_detail.id %}" class="btn btn-primary btn-sm w-100" role="button" aria-pressed="true">Imprimer Facture</a>
+						</div>
+						<div class="col col-md-4 w-100">
+							<a href="{% url 'recut_pdf_view' facture_detail.id %}" class="btn btn-primary btn-sm w-100 {%if solde.montant != 0 %} disabled {%endif%}" role="button" aria-pressed="true">Imprimer Reçut</a>
+						</div>
+						<div class="col col-md-4 w-100">
+							<a href="{% url 'facture-envoyer' facture_detail.id %}" class="btn btn-primary btn-sm w-100" role="button" aria-pressed="true">Envoyer Facture</a>
+						</div>
+					
+					</div>
+				
+				</div>
+				
+				<div class="col-sm-12 col-lg-8">
+					<div class="row">
+						<div class="col section-title">
+							<h4>Honoraires Professionnels</h4>
+						</div>
+					</div>
+					
+					<div class="row border-top border-danger css_major-block-content">
+						{%for prestation in service_list %}
+							<div class="row w-100">
+								<div class="col-lg-2">
+									{{prestation.date}}
+								</div>
+								<div class="col-lg-4">
+									{% if prestation.qte > 1%}
+										{{prestation.qte}} {{prestation.service.unit}}s de {{prestation.service}} @ {{prestation.prix}} $ / {{prestation.service.unit}}
+									{% else %}
+										{{prestation.qte}} {{prestation.service.unit}} de {{prestation.service}} @ {{prestation.prix}} $ / {{prestation.service.unit}}
+									{% endif%}
+									
+								</div>
+								<div class="col-lg-2 text-right">
+									{{prestation.montant}} $
+								</div>
+								<div class="col-lg-2">
+									<a href="{% url 'prestationdeservice-update' prestation.id %}"class="btn btn-info btn-sm w-100" role="button" aria-pressed="true">Update</a>
+								</div>
+								<div class="col-lg-2">
+									<a href="{% url 'prestationdeservice-delete' prestation.id %}"class="btn btn-danger btn-sm w-100">Delete</a>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+					
+					<div class="row border-top border-danger css_major-block-content">
+						{% for k,v in service_details.items %}
+							<div class="row w-100">
+								<div class="col">
+								
+								</div>
+								<div class="col">
+									{{ k }}
+								</div>
+								<div class="col-lg-2 text-right">
+									{{ v }} $
+								</div>
+								<div class="col-lg-2">
+								
+								</div>
+								<div class="col-lg-2">
+								
+								</div>
+							</div>
+						{% endfor %}
+					
+					</div>
+					<div class="row">
+						<div class="col">
+							<h4>
+								<div class="section-title">
+									Paiements Enregistrés
+								</div>
+							</h4>
+						</div>
+					</div>
+					<div class="row border-top border-danger css_major-block-content">
+					{% for pmt in pmt_list %}
+						<div class="row w-100">
+							<div class="col-lg-2">
+								{{ pmt.date }}
+							</div>
+							<div class="col-lg-4">
+								{{ pmt.get_type_display }}
+							</div>
+							<div class=" col-lg-2 text-right">
+								{{ pmt.montant }} $
+							</div>
+							<div class="col-lg-2">
+								<a href="{% url 'paiement-update' pmt.id %}"class="btn btn-info btn-sm w-100" role="button" aria-pressed="true">Update</a>
+							</div>
+							<div class="col-lg-2">
+								<a href="{% url 'paiement-delete' pmt.id %}"class="btn btn-danger btn-sm w-100">Delete</a>
+							</div>
+						</div>
+					{% empty %}
+						<div class="row">
+							<div class="col">
+								no paiement received yet !
+							</div>
+						</div>
+					{% endfor %}
+					</div>
+					<div class="row">
+						<div class="col">
+							
+						</div>
+						<div class="col">
+							Total
+						</div>
+						<div class="col-lg-2 text-right">
+							{{ pmt_total }} $
+						</div>
+						<div class="col-lg-2">
+						</div>
+						<div class="col-lg-2">
+						</div>
+					</div>
+				</div>
+			<div>
+		</form>
+	</div>
+	
+{% endblock %}

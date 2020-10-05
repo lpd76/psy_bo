@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+<!--- css -->
+	
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3">
+				
+				<img src="{% get_media_prefix %}{{psy_profile.avatar}}" class="img-fluid" alt="Responsive image">
+				<div class="row">
+					<div class="col">
+						<a href="tel:{{psy_profile.phone}}"><i class="fas fa-phone"></i> : {{psy_profile.phone}} </a>
+					</div>
+					
+				</div>
+				
+				
+			</div>
+			<div class="col-sm-9">
+				<div class="col-sm-12">
+					{% block cv %} {% endblock %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

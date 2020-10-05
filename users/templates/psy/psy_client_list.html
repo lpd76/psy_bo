@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+<!--- css -->
+	
+{% block title %}Client Sign Up{% endblock %}
+
+{% block content %}
+	<div class="container">
+		
+		<h2>Client list</h2>
+		<ul>
+		{% for client in object_list %}
+			<li><a href="{% url 'clientdetails2' client.id %}">{{ client.first_name }} {{ client.last_name }} {{ client.dob}}</a></li>
+		{% endfor %}
+		</ul>
+		 
+	</div>
+{% endblock %}

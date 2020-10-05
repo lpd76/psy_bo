@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+.canvas{
+	
+	
+}
+
+.section-title {
+  font-family: Cinzel, serif;
+}
+
+.bill-info-block .row {
+	
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.bill-info-block {
+	font-size: 12px;
+}
+
+.css_major-block-content{
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	
+}
+
+#left-column{
+	padding-left: 15px;
+	padding-right: 30px;
+	
+}
+
+.row{
+	padding-top: 2px;
+	padding-bottom: 2px;
+	
+}

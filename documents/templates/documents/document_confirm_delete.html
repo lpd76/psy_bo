@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+<!--- css -->
+	
+{% block title %}Confirm Delete{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<form method="post">
+		{% csrf_token %}
+		    <p>Are you sure you want to delete "{{ object }}"?</p>
+		    <input type="submit" value="Confirm">
+		</form>
+	</div>
+{% endblock %}

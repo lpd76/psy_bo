@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+<!--- css -->
+
+	
+{% block title %}Clients{% endblock %}
+
+{% block content %}
+	<div class="container">
+		
+		
+		<div class="container">
+		<form method="post" class="form">
+			{% csrf_token %}
+			<div class="row">
+				<div class="col-sm-10">
+					<h4>Clients</h4>
+				</div>
+			</div>
+			<table class="table">
+				<tbody>
+					{% for element in psy_client_list %}
+						<tr>
+							<td>
+								{{ element.last_name }}
+							</td>
+							<td>
+								{{ element.first_name }}
+							</td>
+							<td>
+								<a href="tel:{{ element.cell_phone }}">{{ element.cell_phone }}</a>
+							</td>
+							<td>
+								<a href="mailto:{{ element.email }}">{{ element.email }}</a>
+							</td>
+							<td>
+								<a href="{% url 'client-update' element.id %}" class="btn btn-info">Update</button></a>
+							</td>
+							<td>
+								<a href="{% url 'clientdetails2' element.id %}"class="btn btn-info">View</button></a>
+							</td>
+						</tr>
+					{% endfor%}
+				</tbody>
+			</table>
+		</form>
+	</div>
+{% endblock %}

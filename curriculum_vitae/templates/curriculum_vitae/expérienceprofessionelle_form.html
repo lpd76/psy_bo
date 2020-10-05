@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+<!--- css -->
+	
+{% block title %}Psy Sign Up{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<link rel="stylesheet" type="text/css" href="{% static 'users/user_form.css' %}">
+		<h2>Expériences Professionelles</h2>
+		<form method="post" class="form" enctype="multipart/form-data">
+			{% csrf_token %}
+			
+			{% bootstrap_form form %}
+			
+			<button type="submit" class="btn btn-primary" value="Save">Save</button>
+			<button type="submit" class="btn btn-primary" name="experience-add" value="experience-add">Save and add another</button>
+		</form>
+	</div>
+{% endblock %}

@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!--- BOOTSTRAP -->
+		<link rel="stylesheet" type="text/css" href="{% static 'css/multi_menus.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/general_layout.css' %}">
+		{% block css %}{% endblock %}
+		
+		<!--- BOOTSTRAP -->
+		{# Load the tag library #}
+		{% load bootstrap4 %}
+		{# Load CSS and JavaScript #}
+		{% bootstrap_css %}
+		{% bootstrap_javascript jquery='full' %}
+		{# Display django.contrib.messages as Bootstrap alerts #}
+		{% bootstrap_messages %}
+		{% block extrahead %}{% endblock %}
+		
+		<!--- FAVICON -->
+		<link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon_io/apple-touch-icon.png' %}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon_io/favicon-32x32.png' %}">
+		<link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon_io/favicon-16x16.png' %}">
+		<link rel="manifest" href="/site.webmanifest">
+		
+		<!--- GOOGLE FONT -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Halant">
+		
+		<!--- FONT AWSOME-->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+		<title>{% block title %}{% endblock %}</title>
+	</head>
+	
+	<body>
+		<!--- BEGINNING OF NAVBAR -->
+		<div class="container">
+			<nav class="navbar navbar-expand-lg navbar-light .navbar-brand">
+				<a class="navbar-brand" href="{% url 'cv' 13 %}">
+				  	<img src="/media/media/logo/logo.png" width="270" height="85" alt="">
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+			    	<span class="navbar-toggler-icon"></span>
+			  	</button>
+			  	
+				<div class="collapse navbar-collapse" id="#navbarNavDropdown">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item">
+							{% if user.is_authenticated and user.psychologue.is_psychologist %}
+								<a class="nav-link" href="{% url 'cv' user.id %}">
+							{% else %}
+				        		<a class="nav-link" href="{% url 'cv' 13 %}">
+				        	{% endif %}
+				        		Profile
+				        	</a>
+				      	</li>
+				      	
+						{% if user.is_authenticated and user.psychologue.is_psychologist %}
+							<li class="nav-item dropdown">
+					        	<a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle">
+					          		Moi
+					        	</a>
+					        	
+					         	<ul class="dropdown-menu">
+						            <li>
+							            <a href="{% url 'psyupdate' user.id %}" class="dropdown-item">
+							            	Profile (Mise à Jour)
+							            </a>
+						            </li>
+						            <!-- lvl 1 dropdown -->
+						            <li class="dropdown-submenu">
+						             	<a href="#" role="button" data-toggle="dropdown" class="dropdown-item dropdown-toggle">CV</a>
+						             	<ul class="dropdown-menu">
+						                <!-- lvl 2 dropdown Education-->
+						                	<li class="dropdown-submenu">
+						                  		<a href="#" role="button" data-toggle="dropdown" class="dropdown-item dropdown-toggle">Éducation</a>
+					                  			<ul class="dropdown-menu">
+					                    			<li>
+					                    				<a href="{% url 'education-list' %}" class="dropdown-item">Liste</a>
+					                    			</li>
+					                				<li>
+					                					<a href="{% url 'education-add' %}" class="dropdown-item">Ajouter</a>
+					                				</li>
+					                  			</ul>
+						                	</li>
+						              		<!-- lvl 2 Expériences Professionnelles-->
+						                	<li class="dropdown-submenu">
+						                  		<a href="#" role="button" data-toggle="dropdown" class="dropdown-item dropdown-toggle">Expériences Professionnelles</a>
+						                  		<ul class="dropdown-menu">
+								                    <li>
+								                    	<a href="{% url 'experience-list' %}" class="dropdown-item">Liste</a>
+								                    </li>
+								                	<li>
+								                		<a href="{% url 'experience-add' %}" class="dropdown-item">Ajouter</a>
+								                	</li>
+						                  		</ul>
+						                	</li>
+						                	<!-- lvl 2 dropdown Education-->
+						                	<li class="dropdown-submenu">
+						                  		<a href="#" role="button" data-toggle="dropdown" class="dropdown-item dropdown-toggle">Conférences</a>
+						                  		<ul class="dropdown-menu">
+								                    <li>
+								                    	<a href="{% url 'conference-list' %}" class="dropdown-item">Liste</a>
+								                    </li>
+								                	<li>
+								                		<a href="{% url 'conference-add' %}" class="dropdown-item">Ajouter</a>
+								                	</li>
+						                  		</ul>
+						                	</li>
+							                <!-- lvl 2 dropdown Education-->
+							                <li class="dropdown-submenu">
+							                	<a href="#" role="button" data-toggle="dropdown" class="dropdown-item dropdown-toggle">Associations Professionnelles</a>
+						                  		<ul class="dropdown-menu">
+						                    		<li>
+						                    			<a href="{% url 'association-list' %}" class="dropdown-item">Liste</a>
+						                    		</li>
+						                			<li>
+						                				<a href="{% url 'association-add' %}" class="dropdown-item">Ajouter</a>
+						                			</li>                   
+					                  			</ul>
+						                	</li>
+						                	
+						              	</ul>
+						            </li>
+					            
+								</ul>
+							</li>
+							
+				      		<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="#navbarNavDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								  Mes Services
+								</a>
+								<div class="dropdown-menu" aria-labelledby="#navbarNavDropdown">
+									<a class="dropdown-item" href="{% url 'service-list' %}">Liste</a>
+									<a class="dropdown-item" href="{% url 'service-add' %}">Ajouter</a>
+									
+								</div>
+							</li>
+				      		
+				      		<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="#navbarNavDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								  Clients
+								</a>
+								<div class="dropdown-menu" aria-labelledby="#navbarNavDropdown">
+									<a class="dropdown-item" href="{% url 'psyclientlist' %}">Liste</a>
+									<a class="dropdown-item" href="{% url 'psyclientcreate' user.id %}">Ajouter</a>
+									
+								</div>
+							</li>
+							
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="#navbarNavDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								  Configurations
+								</a>
+								<div class="dropdown-menu" aria-labelledby="#navbarNavDropdown">
+									<a class="dropdown-item" href="{% url 'documenttype-list' user.id%}">Types de Document (Liste)</a>
+									<a class="dropdown-item" href="{% url 'documenttype-add' user.id %}">Type de Document (Ajouter) </a>
+									<a class="dropdown-item" href="#">Types de Notes (Liste)</a>
+									<a class="dropdown-item" href="{% url 'notetype-add' %}">Type de Note (Ajouter) </a>
+									
+								</div>
+							</li>
+							
+							
+					      	<li class="nav-item"><a class="nav-link" href="{% url 'logout' %}?next={{request.path}}">logout</a></li>
+					      	 <button class="btn btn-outline-success" type="button"> User: {{ user.get_full_name }} </button>
+					    {% else %}
+					      	<li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+					    {% endif %}
+					    
+					</ul>
+				</div>
+			</nav>	
+			<!--- END OF NAVBAR -->
+				
+			{% block content %}
+			
+			{% endblock %}
+			
+			<footer class="page-footer text-center w-100">
+			<!-- Copyright -->
+				
+					© 2020 Copyright:Louis-Philippe David
+			
+			</footer>
+		</div>
+		<script type="text/javascript" src="{% static 'js/multi_menus.js' %}"></script>
+		{% block js %}{% endblock %}
+	</body>
+</html>

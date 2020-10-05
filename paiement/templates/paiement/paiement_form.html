@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% block extrahead %}
+	{{ form.media }}
+{% endblock %}
+
+<!--- css -->
+	
+{% block title %}Paiement{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<form method="post" class="form" enctype="multipart/form-data">
+			{% csrf_token %}
+			
+				{% bootstrap_form form %}
+			
+			<div class="row">
+				<div class="col">
+					<button type="submit" class="btn btn-primary" value="Save">Save</button>
+				</div>
+				<div class="col">
+					<button type="submit" class="btn btn-primary" name="paiement-add" value="paiement-add">Save and add another</button>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}

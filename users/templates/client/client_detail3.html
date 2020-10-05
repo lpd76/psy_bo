@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+<!--- css -->
+	
+{% block title %}Client Detail{% endblock %}
+
+{% block content %}
+	<div class="container ">
+		<div class="row">
+			<div class="col-sm-1 col-lg-3">
+				<div class="row">
+					<h3>{{ client.first_name }} {{ client.last_name }}</h3>
+				</div>
+				<div class="row">
+					<a href="tel:{{client.cell_phone}}"><i class="fas fa-phone"></i> : {{client.cell_phone}}</a>
+				</div>
+				<div class="row">
+				 	<a href="mailto: {{ client.email }}"<i class="fas fa-envelope"></i> : {{ client.email }}</a>
+				</div>
+				<div class="row">
+				 	{{ client.door_number }} {{ client.street_name }}
+				</div>
+				<div class="row">
+				 	{{ client.city }}, {{ client.province }}
+				</div>
+		
+				<div class="row">
+					{{ client.postal_code }} 
+				</div>
+				<div class="row">
+					<a class="btn btn-info btn-sm" href="#">Ajouter Rendez-Vous</a> 
+				</div>
+				<div class="row">
+					<a class="btn btn-info btn-sm" href="{% url 'facture-add' client.id %}">Créer nouvelle facture</a> 
+				</div>
+				<div class="row">
+					<a class="btn btn-info btn-sm" href="{% url 'document-uplaod' client.id %}">Télécharger Document</a> 
+				</div>
+				<div class="row">
+					<a class="btn btn-info btn-sm" href="{% url 'note-add' client.id %}">Ajouter Note</a> 
+				</div>
+			</div>
+			
+			<div class="col-sm-1 col-lg-9 ">
+				<ul class="nav flex-sm-column" id="myTab">
+				
+					<li class="nav-item">
+						<a class="nav-link active" id="rv-tab" data-toggle="tab" href="#rv"  aria-controls="home" aria-selected="true">
+							Rendez-vous
+						</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link" id="profile-tab" data-toggle="tab" href="#facture"  aria-controls="facture" aria-selected="false">
+							Factures
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="contact-tab" data-toggle="tab" href="#fichier"  aria-controls="fichier" aria-selected="false">
+							Documents
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="note-tab" data-toggle="tab" href="#note"  aria-controls="note" aria-selected="false">
+							Notes
+						</a>
+					</li>
+				</ul>
+				
+				<div class="tab-content flex-sm-column" id="myTabContent">
+					<div class="tab-pane fade show active" id="rv" role="tabpanel" aria-labelledby="rv-tab">
+						Rendez-vous
+					</div>
+					<div class="tab-pane fade" id="facture" role="tabpanel" aria-labelledby="facture-tab">
+						<table class="table ">
+							<tbody>
+								{% for element in facture_list %}
+									<tr>
+										<td>
+											<div class="date">{{ element.date|date:"d F Y" }}</div>
+										</td>
+										<td>
+											<div class="cv_name">{{ element.get_status_display }}</div>						
+										</td>
+										<td>
+											<div class="cv_name">{{ element.amount }}</div>						
+										</td>
+										<td>
+											<a href="{% url 'facture-detail' element.id %}" class="btn btn-info btn-sm">View</button></a>					
+										</td>
+										<td>
+											<a href="{% url 'facture-delete' element.id %}" class="btn btn-danger btn-sm">Delete</button></a>					
+										</td>
+										<td>
+											<a href="{% url 'paiement-add' element.id %}" class="btn btn-info btn-sm" role="button" aria-pressed="true">Faire Paiement</a>					
+										</td>
+										
+									</tr>
+								{% endfor%}
+							</tbody>
+						</table>
+					</div>
+					<div class="tab-pane fade" id="fichier" role="tabpanel" aria-labelledby="fichier-tab">
+						<table class="table">
+							<tbody>
+								{% for element in document_list %}
+									<tr>
+										<td>
+											{{element.nom}}
+										</td>
+								
+										<td>
+											<a href="{% url 'document-delete' element.id %}" button type="submit" class="btn btn-danger">Delete</button></a>					
+										</td>
+									</tr>
+								{% endfor%}
+							</tbody>
+						</table>
+					</div>
+					<div class="tab-pane fade" id="note" role="tabpanel" aria-labelledby="note-tab">
+						{% for note in notes %}
+							<div class="row border-bottom border-warning">
+								<div class="col-sm-3">
+									<div>{{note.start_date|date:"D, d M Y"}}</div>
+									<div>{{ note.start_date|time:"H:i" }} - {{ note.end_date|time:"H:i" }}</div> 
+									<div>{{note.service}}</div>
+								</div>
+								<div class="col-sm-9">
+									
+										{{note.note|safe}}<br>
+									
+									<div class="row">
+										<div class="col">
+										</div>
+										<div class="col-sm-2">
+											<a class="btn btn-light btn-sm" href="{% url 'note-update' note.id %}" role="button">Edit</a>
+										</div>
+										<div class="col-sm-2">
+											<a class="btn btn-light btn-sm" href="{% url 'note-delete' note.id %}" role="button">delete</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block extrahead %}
+	{{ form.media }}
+{% endblock %}
+
+<!--- css -->
+	
+{% block title %}Prestation{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<h2>Prestation</h2>
+		<form method="post" class="form" enctype="multipart/form-data">
+			{% csrf_token %}
+			
+			{% bootstrap_form form %}
+			
+			<button type="submit" class="btn btn-primary" value="Save">Save</button>
+			<button type="submit" class="btn btn-primary" name="prestationdeservice-add" value="prestationdeservice-add">Save and add another</button>
+		</form>
+	</div>
+	
+{% endblock %}
+{% block js %} 
+	
+	<script>
+    $("#id_service").change(function () {
+      console.log( $(this).val() );
+      var service_id = $(this).val()
+      
+      $.ajax({
+        url: "{% url 'ajax-sevice' %}",
+        data: {
+          'service_id': service_id
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.prix) {
+          	$("#id_qte").focus();
+          	$("#id_qte").val(1)
+          	$("#id_prix").val(data.prix)
+           
+          }
+        }
+      });
+      
+    });
+  </script>
+{% endblock %}

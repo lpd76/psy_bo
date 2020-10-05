@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+<!--- css -->
+	
+{% block title %}Psy Sign Up{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<h2>Education</h2>
+		<form method="post" class="form" enctype="multipart/form-data">
+			{% csrf_token %}
+			
+			{% bootstrap_form form %}
+			
+			<button type="submit" class="btn btn-primary" value="Save">Save</button>
+			<button type="submit" class="btn btn-primary" name="education-add" value="education-add">Save and add another</button>
+		</form>
+	</div>
+{% endblock %}

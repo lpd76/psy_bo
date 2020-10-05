@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+	
+<div class="container">
+	<div class="row">
+		<div class="col">
+		  
+		</div>
+		<div class="col">
+			{% if user.is_authenticated %}
+				Hi {{user.first_name}} !
+				
+	
+			{% else %}
+	
+			{% endif %}
+		</div>
+		<div class="col">
+		 
+		</div>
+	</div>
+  
+	<div class="row">
+		<div class="col">
+		  
+		</div>
+		<div class="col">
+			<i class="fas fa-home fa-10x"></i>
+		</div>
+		<div class="col">
+		 
+		</div>
+	</div>
+		
+</div>
+{% endblock %}

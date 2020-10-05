@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}Loggin{% endblock %}
+
+{% block content %}
+<style>
+.login-form {
+    width: 340px;
+    margin: 50px auto;
+  	font-size: 15px;
+}
+.login-form form {
+    margin-bottom: 15px;
+    background: #f7f7f7;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+}
+.login-form h2 {
+    margin: 0 0 15px;
+}
+.form-control, .btn {
+    min-height: 38px;
+    border-radius: 2px;
+}
+.btn {        
+    font-size: 15px;
+    font-weight: bold;
+}
+</style>
+
+<div class="login-form">
+    <form method="post">
+    	{% csrf_token %}
+        <h2 class="text-center">Log in</h2>       
+        {% bootstrap_form form %}
+			
+		<button type="submit" class="btn btn-primary">Sign in</button>
+    </form>
+    <p class="text-center"><a href="{% url 'clientsignup' %}">Create an Account</a></p>
+</div>
+
+	
+	</form>
+{% endblock %}

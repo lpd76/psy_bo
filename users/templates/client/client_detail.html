@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+<!--- css -->
+	
+{% block title %}Client Detail{% endblock %}
+
+{% block content %}
+	<div class="container ">
+	
+		<div class="row">
+			<div class="col-sm-1 col-lg-3">
+				<div class="row">
+				 <h3>{{ client.first_name }} {{ client.last_name }}</h3>
+				</div>
+				<div class="row">
+				 <a href="tel:{{client.cell_phone}}"><i class="fas fa-phone"></i> : {{client.cell_phone}}</a>
+				</div>
+				<div class="row">
+				 <a href="mailto: {{ client.email }}"<i class="fas fa-envelope"></i> : {{ client.email }}</a>
+				</div>
+				<div class="row">
+				 {{ client.door_number }} {{ client.street_name }}
+				</div>
+				<div class="row">
+				 {{ client.city }} 
+				</div>
+				<div class="row">
+				 {{ client.province }} 
+				</div>
+				<div class="row">
+				 {{ client.postal_code }} 
+				</div>
+				<div class="row">
+				 <a href="{% url 'facture-add' client.id %}">créer nouvelle facture</a> 
+				</div>
+			</div>
+			
+			<div class="col-sm-1 col-lg-9 ">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+				
+					<li class="nav-item">
+						<a class="nav-link active" id="rv-tab" data-toggle="tab" href="#rv" role="tab" aria-controls="home" aria-selected="true">
+							Rendez-vous
+						</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link" id="profile-tab" data-toggle="tab" href="#facture" role="tab" aria-controls="facture" aria-selected="false">
+							Factures
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="contact-tab" data-toggle="tab" href="#fichier" role="tab" aria-controls="fichier" aria-selected="false">
+							Fichier
+						</a>
+					</li>
+				</ul>
+				
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active" id="rv" role="tabpanel" aria-labelledby="rv-tab">
+						Rendez-vous
+					</div>
+					<div class="tab-pane fade" id="facture" role="tabpanel" aria-labelledby="facture-tab">
+						factures
+					</div>
+					<div class="tab-pane fade" id="fichier" role="tabpanel" aria-labelledby="fichier-tab">
+						fichier
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		
+		 
+	</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% block extrahead %}
+	<script src="https://cdn.tiny.cloud/1/3uxow28ssthmenpgxa54gwbtdj7mdpjqzi8sprt26xpv0dcz/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+	<script>
+	    tinymce.init({
+	      selector: '#id_note' 
+	    });
+  </script>
+	{{ form.media }}
+{% endblock %}
+
+<!--- css -->
+	
+{% block title %}{{ user.first_name}} {{ user.last_name}}'s Note{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<h2>{{ user.first_name}} {{ user.last_name}}'s Note</h2>
+		<form method="post" class="form" enctype="multipart/form-data">
+			{% csrf_token %}
+			
+			{% bootstrap_form form %}
+			
+			<button type="submit" class="btn btn-primary" value="Save">Save</button>
+			<button type="submit" class="btn btn-primary" name="notetype-add" value="notetype-add">Save and add another</button>
+		</form>
+	</div>
+{% endblock %}

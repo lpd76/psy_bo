@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+<!--- css -->
+	
+{% block title %}Confirm Delete{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<form method="post">
+		{% csrf_token %}
+		    <p>Êtes vous certains de vouloir suprimer la Facture de  "
+		     <b>{{facture_detail.client.first_name}} {{facture_detail.client.last_name}}</b> pour la période du {{facture_detail.date}} "?</p>
+		     
+		     {%if prestation_lis%}
+			     {%for element in prestation_list%}
+			     	{{ element.service}}
+			     
+			     {% endfor %}
+		     {% endif %}
+		    <input type="submit" value="Confirm">
+		</form>
+	</div>
+{% endblock %}
